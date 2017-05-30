@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+    flussonic:
+        image: acrius/flussonic
+        container_name: flussonic
+        depends_on:
+            - flussonic_data
+        ports:
+            - "18080:8080"
+            - "1935:1935"
+            - "554:554"
+        volumes:
+            - ./data/log:/var/log/flussonic
+            - ./data/etc:/etc/flussonic
+
+    flussonic_data:
+        container_name: flussonic_watcher_data
+        image: postgres
+        environment:
+            - POSTGRES_DB=vsaas_production
+            - POSTGRES_USER=vsaas
+            - POSTGRES_PASSWORD=vsaas
+        volumes:
+            - ./database:/var/lib/postgresql/data

@@ -10,7 +10,11 @@ RUN apt-get -y install flussonic flussonic-ffmpeg flussonic-python
 RUN pip install supervisor && apt-get clean autoclean && apt-get autoremove -y
 
 ADD supervisord.conf /etc/supervisord.conf
+
+ENV TERM linux
+
 EXPOSE 80 8080 1935 554
+
 VOLUME ["/var/log/flussonic", "/etc/flussonic"]
 
-CMD ["/usr/local/bin/supervisord"]
+CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisord.conf"]
